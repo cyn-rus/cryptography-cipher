@@ -11,14 +11,14 @@ exports.textToNumber = (text) => {
   return num
 }
 
-exports.numberToText = (num, length) => {
+exports.numberToText = (num) => {
   let text = ""
   let i = 0
   for (const n of num) {
     text += String.fromCharCode(n + 65)
     i++
 
-    if (i === length) {
+    if (i === 5) {
       i = 0
       text += " "
     } 

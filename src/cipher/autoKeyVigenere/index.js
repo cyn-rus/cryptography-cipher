@@ -29,5 +29,5 @@ exports.decrypt = (cipher, key) => {
     keyNum.push(decrypted)
   }
 
-  return numberToText(output, 0).toLowerCase()
+  return numberToText(output).toLowerCase()
 }
