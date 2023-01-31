@@ -1,3 +1,7 @@
+exports.onlyAlphabet = (text) => {
+  return text.replace(/\s/g, '').replace(/[^a-zA-Z ]/g, '').replace(/[0-9]/g, '')
+}
+
 exports.textToNumber = (text) => {
   const num = []
   for (const char of text) {
