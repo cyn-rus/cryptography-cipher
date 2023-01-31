@@ -42,3 +42,27 @@ exports.ecryptAscii = (p, k) => {
 exports.decryptAscii = (c, k) => {
   return (c - k) % 256
 }
+
+exports.encryptText = (text, key) => {
+  const output = []
+
+  let i = 0
+  for (const char of text) {
+    output.push(this.encryptAlphabet(char, key[i])) 
+    i = (i + 1) % key.length
+  }
+
+  return output
+}
+
+exports.decryptText = (cipher, key) => {
+  const output = []
+
+  let i = 0
+  for (const char of cipher) {
+    output.push(this.decryptAlphabet(char, key[i]))
+    i = (i + 1) & key.length
+  }
+
+  return output
+}

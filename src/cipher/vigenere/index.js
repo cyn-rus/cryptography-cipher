@@ -1,29 +1,19 @@
-const { onlyAlphabet, textToNumber, numberToText, encryptAlphabet, decryptAlphabet } = require("../helper")
+const { onlyAlphabet, textToNumber, numberToText, encryptText, decryptText } = require("../helper")
 
-const encrypt = (plaintext, key) => {
+exports.encrypt = (plaintext, key) => {
   const plaintextNum = textToNumber(onlyAlphabet(plaintext))
   const keyNum = textToNumber(key)
  
-  const output = []
-  let i = 0
-  for (const char of plaintextNum) {
-    output.push(encryptAlphabet(char, keyNum[i])) 
-    i = (i + 1) % keyNum.length
-  }
+  const output = encryptText(plaintextNum, keyNum)
   
-  return numberToText(output, 0)
+  return numberToText(output)
 }
 
 exports.decrypt = (cipher, key) => {
   const cipherNum = textToNumber(cipher)
   const keyNum = textToNumber(key)
 
-  const output = []
-  let i = 0
-  for (const char of cipherNum) {
-    output.push(decryptAlphabet(char, keyNum[i]))
-    i = (i + 1) % keyNum.length
-  }
+  const output = decryptText(cipherNum, keyNum)
 
   return numberToText(output, 0).toLowerCase()
 }
