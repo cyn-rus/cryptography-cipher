@@ -1,6 +1,7 @@
 const { textToNumber, numberToText, encryptAlphabet, decryptAlphabet } = require("../helper")
 
-exports.cipher = (plaintext, key) => {
+exports.encrypt = (plaintext, key) => {
+  plaintext = plaintext.replace(/\s/g, '').replace(/[^a-zA-Z ]/g, '')
   const plaintextNum = textToNumber(plaintext)
   const keyNum = textToNumber(key)
  
@@ -14,7 +15,7 @@ exports.cipher = (plaintext, key) => {
   return numberToText(output, 0)
 }
 
-exports.decipher = (cipher, key) => {
+exports.decrypt = (cipher, key) => {
   const cipherNum = textToNumber(cipher)
   const keyNum = textToNumber(key)
 

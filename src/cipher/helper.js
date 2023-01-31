@@ -1,7 +1,4 @@
 exports.textToNumber = (text) => {
-  text = text.replace(/\s/g, '')
-  text = text.replace(/[^a-zA-Z ]/g, '')
-
   const num = []
   for (const char of text) {
     num.push(char.toLowerCase().charCodeAt(0) - 97)
