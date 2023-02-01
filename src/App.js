@@ -1,23 +1,23 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from 'react'
+import './App.css'
 
-function App() {
+const App = () => {
+  const [file, setFile] = useState()
+
+  function uploadFile(event) {
+    setFile(event.target.files[0])
+    const reader = new FileReader()
+    reader.onload = function(evt) {
+      console.log(evt.target.result)
+    }
+    reader.readAsBinaryString(file)
+  }
+
+  console.log(file)
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <input type="file" name="file" onChange={uploadFile} />
     </div>
   );
 }
