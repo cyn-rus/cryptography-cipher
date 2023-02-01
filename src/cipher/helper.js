@@ -5,7 +5,7 @@ exports.onlyAlphabet = (text) => {
 exports.textToNumber = (text) => {
   const num = []
   for (const char of text) {
-    num.push(char.toLowerCase().charCodeAt(0) - 97)
+    num.push(char.toLowerCase().charCodeAt() - 97)
   }
 
   return num
@@ -20,6 +20,24 @@ exports.numberToText = (num) => {
   return text
 }
 
+exports.textToAscii = (text) => {
+  const ascii = []
+  for (const char of text) {
+    ascii.push(char.charCodeAt())
+  }
+
+  return ascii
+}
+
+exports.asciiToText = (ascii) => {
+  let text = ""
+  for (const a of ascii) {
+    text += String.fromCharCode(a)
+  }
+
+  return text
+}
+
 exports.encryptAlphabet = (p, k) => {
   return (p + k) % 26
 }
@@ -28,36 +46,40 @@ exports.decryptAlphabet = (c, k) => {
   return ((c + 26) - k) % 26
 }
 
-exports.ecryptAscii = (p, k) => {
+exports.encryptAscii = (p, k) => {
   return (p + k) % 256
 }
 
 exports.decryptAscii = (c, k) => {
-  return (c - k) % 256
+  return ((c + 256) - k) % 256
 }
 
-exports.encryptText = (text, key) => {
+const encDec = (text, key, func) => {
   const output = []
 
   let i = 0
   for (const char of text) {
-    output.push(this.encryptAlphabet(char, key[i])) 
+    output.push(func(char, key[i]))
     i = (i + 1) % key.length
   }
 
   return output
 }
 
+exports.encryptText = (text, key) => {
+  return encDec(text, key, this.encryptAlphabet)
+}
+
 exports.decryptText = (cipher, key) => {
-  const output = []
+  return encDec(cipher, key, this.decryptAlphabet)
+}
 
-  let i = 0
-  for (const char of cipher) {
-    output.push(this.decryptAlphabet(char, key[i]))
-    i = (i + 1) & key.length
-  }
+exports.encryptAsciiText = (text, key) => {
+  return encDec(text, key, this.encryptAscii)
+}
 
-  return output
+exports.decryptAsciiText = (cipher, key) => {
+  return encDec(cipher, key, this.decryptAscii)
 }
 
 exports.gcd = (a, b) => {
