@@ -13,15 +13,8 @@ exports.textToNumber = (text) => {
 
 exports.numberToText = (num) => {
   let text = ""
-  let i = 0
   for (const n of num) {
     text += String.fromCharCode(n + 65)
-    i++
-
-    if (i === 5) {
-      i = 0
-      text += " "
-    } 
   }
   
   return text
@@ -65,4 +58,22 @@ exports.decryptText = (cipher, key) => {
   }
 
   return output
+}
+
+exports.gcd = (a, b) => {
+  return (b === 0 ? a : this.gcd(b, a % b));
+}
+
+const multiply = (a, b, mod) => {
+  return (a * b) % mod;
+}
+
+exports.modInverse = (a, mod) => {
+  a = a % mod;
+  for (let i = 1; i < mod; ++i) {
+    if (multiply(a, i, mod) === 1) {
+      return i;
+    }
+  }
+  return -1;
 }
