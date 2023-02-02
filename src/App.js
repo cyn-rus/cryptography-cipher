@@ -78,7 +78,6 @@ const App = () => {
     })[0].function
     const res = method[choice](textArea, textKey)
     setResult(res)
-    console.log(res)
   }
 
   return (
