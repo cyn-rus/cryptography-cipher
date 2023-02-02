@@ -76,7 +76,7 @@ const App = () => {
     const method = map.filter(function (m) {
       return m.value == cipher
     })[0].function
-    const res = method[choice](binaryFile, textKey)
+    const res = method[choice](textArea, textKey)
     setResult(res)
     console.log(res)
   }
