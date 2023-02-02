@@ -1,4 +1,4 @@
-import {textToNumber} from "../helper";
+const { textToNumber } = require("../helper")
 
 const CODE_I = 8;
 const CODE_J = 9;
