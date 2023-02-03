@@ -84,9 +84,9 @@ const App = () => {
     <div className="home">
       <div className="header">Tugas 1 Kriptografi</div>
       <div className="page-content">
-        <div className="option">
-          <h2>Cipher</h2>
-          <select onChange={changeCipher}>
+        <div className="option container">
+          <h2>Jenis Cipher</h2>
+          <select className="input-area"  onChange={changeCipher}>
             <option value={1}>Vigenere Standard</option>
             <option value={2}>Auto-Key Vigenere Cipher</option>
             <option value={3}>Extended Vigenere Cipher</option>
@@ -95,37 +95,37 @@ const App = () => {
             <option value={6}>Hill Cipher</option>
           </select>
         </div>
-        <div className="choice" onChange={changeChoice}>
-          <div className="encrypt">
+        <div className="choice container" onChange={changeChoice}>
+          <div className="encrypt choice-container">
             <input type="radio" value="encrypt" name="choice" defaultChecked={true} />
             <p>Encrypt</p>
           </div>
-          <div className="decrypt">
+          <div className="decrypt choice-container">
             <input type="radio" value="decrypt" name="choice" />
             <p>Decrypt</p>
           </div>
         </div>
         <div className="input">
-          <div className="text">
+          <div className="text container">
             <h2>Text</h2>
-            <textarea id="textInput" rows="10" cols="80" />
+            <textarea id="textInput" className="input-area" rows="10" cols="80" />
           </div>
-          <div className="file">
+          <div className="file container">
             <h2>File</h2>
             <input type="file" name="file" onChange={uploadFile} />
           </div>
           <div className="key">
             <h2>Key</h2>
-            <input id="textKey" />
+            <input id="textKey" className="input-area text-container" />
           </div>
         </div>
-        <div className="code">
-          <button onClick={() => code()}>Code</button>
+        <div className="code container">
+          <button className="process-btn" onClick={() => code()}>Process</button>
         </div>
-        <div className="output">
+        <div className="output container">
           <h2>Result</h2>
-          <p>{result}</p>
-          <button>Download</button>
+          <p className="input-area text-container">{result}</p>
+          <button className="download-btn">Download</button>
         </div>
       </div>
     </div>
