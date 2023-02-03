@@ -100,12 +100,15 @@ const App = () => {
   function download() {
     const el = document.createElement("a")
     if (cipher === "3" && input === "file") {
-      const blob = new Blob(result)
-      const url = window.URL.createObjectURL([blob], {type: "application/octet-stream"})
-      el.href = url
-      el.download = "decrypt.txt"
+      let binary = ""
+      for (const r of result) {
+        binary += r.charCodeAt().toString(2) + " "
+      }
+      
+      const blob = new Blob([binary], {type: "application/octet-stream"})
+      el.href = window.URL.createObjectURL(blob)
+      el.download = "decrypt"
       el.click()
-      window.URL.revokeObjectURL(url)
     } else {
       el.setAttribute("href", "data:text/plain; charset=utf-8," + encodeURIComponent(result))
       el.setAttribute("download", "decrypt.txt")
@@ -113,9 +116,8 @@ const App = () => {
       el.style.display = "none"
       document.body.appendChild(el)
       el.click()
+      document.body.removeChild(el)
     }
-
-    document.body.removeChild(el)
   }
 
   return (
