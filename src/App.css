@@ -28,6 +28,7 @@ p {
   font-size: 14px;
   font-family: Roboto, sans-serif;
   border: 1px solid darkgrey;
+  line-break: anywhere;
 }
 .choice {
   display: flex;
@@ -51,7 +52,7 @@ button {
 .download-btn {
   background-color: #FC6C85;
   color: white;
-  margin: 12px 0;
+  margin: 2rem 0;
 }
 .text-container {
   width: 100%;
@@ -59,4 +60,17 @@ button {
 }
 .output {
   margin: 32px 0;
+}
+
+.result {
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+.h-10 {
+  height: 10rem;
+}
+
+.pr-10 {
+  padding-right: 6rem;
 }

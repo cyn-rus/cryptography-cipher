@@ -15,5 +15,5 @@ exports.decrypt = (cipher, key) => {
 
   const output = decryptAsciiText(cipherNum, keyNum)
 
-  return asciiToText(output).toLowerCase()
+  return asciiToText(output)
 }

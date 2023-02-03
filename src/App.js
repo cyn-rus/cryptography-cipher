@@ -14,6 +14,7 @@ const App = () => {
   const [fileContent, setFileContent] = useState()
   const [cipher, setCipher] = useState(1)
   const [choice, setChoice] = useState("encrypt")
+  const [input, setInput] = useState("text")
   const [result, setResult] = useState("")
 
   function changeCipher(e) {
@@ -24,12 +25,16 @@ const App = () => {
     setChoice(e.target.value)
   }
 
+  function changeInput(e) {
+    setInput(e.target.value)
+  }
+
   async function uploadFile(event) {
     const uploadedFile = event.target.files[0]
     setFile(uploadedFile)
 
     const reader = new FileReader()
-    reader.readAsText(uploadedFile, "UTF-64")
+    reader.readAsText(event.target.files[0], "UTF-64")
     reader.onload = function(e) {
       setFileContent(e.target.result)
     }
@@ -51,8 +56,20 @@ const App = () => {
   }
 
   function code() {
-    const textArea = document.getElementById("textInput").value
+    let inputText = ""
+    if (input === "text") inputText = document.getElementById("textInput").value
+    else {
+      if (cipher === "3") inputText = binaryFile
+      else inputText = fileContent
+    }
+
     const textKey = document.getElementById("textKey").value
+
+    if (!inputText || !textKey) {
+      alert("Oops! Looks like there are some empty fields.")
+      return
+    }
+
     const map = [{
       "value": 1,
       "function": vigenere,
@@ -76,8 +93,29 @@ const App = () => {
     const method = map.filter(function (m) {
       return m.value == cipher
     })[0].function
-    const res = method[choice](textArea, textKey)
+    const res = method[choice](inputText, textKey)
     setResult(res)
+  }
+  
+  function download() {
+    const el = document.createElement("a")
+    if (cipher === "3" && input === "file") {
+      const blob = new Blob(result)
+      const url = window.URL.createObjectURL([blob], {type: "application/octet-stream"})
+      el.href = url
+      el.download = "decrypt.txt"
+      el.click()
+      window.URL.revokeObjectURL(url)
+    } else {
+      el.setAttribute("href", "data:text/plain; charset=utf-8," + encodeURIComponent(result))
+      el.setAttribute("download", "decrypt.txt")
+      
+      el.style.display = "none"
+      document.body.appendChild(el)
+      el.click()
+    }
+
+    document.body.removeChild(el)
   }
 
   return (
@@ -106,14 +144,28 @@ const App = () => {
           </div>
         </div>
         <div className="input">
-          <div className="text container">
-            <h2>Text</h2>
-            <textarea id="textInput" className="input-area" rows="10" cols="80" />
+          <div className="choice container choose-input" onChange={changeInput}>
+            <div className="input-text choice-container">
+              <input type="radio" value="text" name="choose-input" defaultChecked={true} />
+              <p>Text</p>
+            </div>
+            <div className="input-file choice-container">
+              <input type="radio" value="file" name="choose-input" />
+              <p>File</p>
+            </div>
           </div>
-          <div className="file container">
-            <h2>File</h2>
-            <input type="file" name="file" onChange={uploadFile} />
-          </div>
+          {input === "text" &&
+            <div className="text container">
+              <h2>Text</h2>
+              <textarea id="textInput" className="input-area" rows="10" cols="80" />
+            </div>
+          }
+          {input === "file" &&
+            <div className="file container">
+              <h2>File</h2>
+              <input type="file" name="file" onChange={uploadFile} />
+            </div>
+          }
           <div className="key">
             <h2>Key</h2>
             <input id="textKey" className="input-area text-container" />
@@ -124,8 +176,10 @@ const App = () => {
         </div>
         <div className="output container">
           <h2>Result</h2>
-          <p className="input-area text-container">{result}</p>
-          <button className="download-btn">Download</button>
+          <div className="h-10 result">
+            <p className="text-container input-area h-10">{result}</p>
+          </div>
+          <button className="download-btn" onClick={() => download()}>Download</button>
         </div>
       </div>
     </div>
