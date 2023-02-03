@@ -1,5 +1,5 @@
 const math = require('mathjs');
-const { inverse } = require("../helper");
+const { modInverse } = require("../helper");
 
 const generateKeyMatrix = (key) => {
     let mK = [[0,0,0],[0,0,0],[0,0,0]];
@@ -26,7 +26,7 @@ const modMatrixInverse = (matrix, n) => {
 
     determinant = Math.round(determinant);
 
-    let invDet = inverse(determinant, n);
+    let invDet = modInverse(determinant, n);
     let invMat = math.inv(matrix);
 
     invMat = math.multiply(determinant, invMat);
