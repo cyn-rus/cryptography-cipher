@@ -1,8 +1,8 @@
-const {numberToText, textToNumber} = require("../helper");
+const {numberToText, textToNumber, onlyAlphabet} = require("../helper");
 const helper = require("./helper");
 
 exports.encrypt = (plaintext, key) => {
-    const bigramArray = helper.generateBigram(textToNumber(plaintext));
+    const bigramArray = helper.generateBigram(textToNumber(onlyAlphabet(plaintext)));
     const keyMatrix = helper.generateKeyMatrix(textToNumber(key));
     const encryptedResult = [];
 
@@ -17,7 +17,7 @@ exports.encrypt = (plaintext, key) => {
                 keyMatrix[locationA[0]][(locationB[1] + 1) % 5],
             ];
         } else if (locationA[1] === locationB[1]) {
-            return [
+            bigramElmt = [
                 keyMatrix[(locationA[0] + 1) % 5][locationA[1]],
                 keyMatrix[(locationB[0] + 1) % 5][locationA[1]],
             ];
@@ -51,7 +51,7 @@ exports.decrypt = (cipher, key) => {
                 keyMatrix[locationA[0]][(locationB[1] + 4) % 5],
             ];
         } else if (locationA[1] === locationB[1]) {
-            return [
+            bigramElmt = [
                 keyMatrix[(locationA[0] + 4) % 5][locationA[1]],
                 keyMatrix[(locationB[0] + 4) % 5][locationA[1]],
             ];
