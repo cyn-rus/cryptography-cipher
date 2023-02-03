@@ -15,17 +15,19 @@ exports.encrypt = (plaintext, key) => {
             mP = plaintextNum.slice(i, i+3);
 
             while (mP.length < 3) {
-                mP.push(26);
+                mP.push(-1);
             }
 
             mC = math.multiply(mK, mP);
             mC = math.round(mC);
-            mC = math.mod(mC, 28);
-            encryptedResult.concat(mC);
+            mC = math.mod(mC, 26);
+
+            encryptedResult = encryptedResult.concat(mC);
             i+=3;
         }
 
-        return numberToText(encryptedResult);
+
+        return numberToText(encryptedResult.slice(0, plaintext.length));
     } else {
         return "Invalid keys for cipher"
     }
@@ -33,8 +35,7 @@ exports.encrypt = (plaintext, key) => {
 
 exports.decrypt = (cipher, key) => {
     const mK = helper.generateKeyMatrix(key);
-
-    let mKInv = helper.modMatrixInverse(mK, 28)
+    const mKInv = helper.modMatrixInverse(mK, 26);
 
     if (!isNaN(mKInv[0][0])) {
         const cipherNum = textToNumber(onlyAlphabet(cipher));
@@ -51,13 +52,13 @@ exports.decrypt = (cipher, key) => {
 
             mP = math.multiply(mKInv, mC);
             mP = math.round(mP);
-            mP = math.mod(mP, 28);
+            mP = math.mod(mP, 26);
 
-            decryptedResult.concat(mP);
+            decryptedResult = decryptedResult.concat(mP);
             i+=3;
         }
 
-        return numberToText(decryptedResult);
+        return numberToText(decryptedResult.slice(0, cipher.length));
     } else {
         return "Invalid keys for cipher"
     }
