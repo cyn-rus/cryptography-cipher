@@ -2,7 +2,7 @@ const { textToNumber, onlyAlphabet, numberToText, encryptText, decryptAlphabet }
 
 exports.encrypt = (plaintext, key) => {
   const plaintextNum = textToNumber(onlyAlphabet(plaintext))
-  const keyNum = textToNumber(key)
+  const keyNum = textToNumber(onlyAlphabet(key))
   
   const plaintextLen = plaintextNum.length
   const keyLen = key.length

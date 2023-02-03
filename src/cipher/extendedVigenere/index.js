@@ -1,8 +1,8 @@
-const { textToAscii, encryptAsciiText, decryptAsciiText, asciiToText, textToNumber } = require("../helper")
+const { textToAscii, encryptAsciiText, decryptAsciiText, asciiToText, textToNumber, onlyAlphabet } = require("../helper")
 
 exports.encrypt = (plaintext, key) => {
   const plaintextNum = textToAscii(plaintext)
-  const keyNum = textToNumber(key)
+  const keyNum = textToNumber(onlyAlphabet(key))
 
   const output = encryptAsciiText(plaintextNum, keyNum)
 
@@ -11,7 +11,7 @@ exports.encrypt = (plaintext, key) => {
 
 exports.decrypt = (cipher, key) => {
   const cipherNum = textToAscii(cipher)
-  const keyNum = textToNumber(key)
+  const keyNum = textToNumber(onlyAlphabet(key))
 
   const output = decryptAsciiText(cipherNum, keyNum)
 

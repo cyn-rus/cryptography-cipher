@@ -2,7 +2,7 @@ const { onlyAlphabet, textToNumber, numberToText, encryptText, decryptText } = r
 
 exports.encrypt = (plaintext, key) => {
   const plaintextNum = textToNumber(onlyAlphabet(plaintext))
-  const keyNum = textToNumber(key)
+  const keyNum = textToNumber(onlyAlphabet(key))
  
   const output = encryptText(plaintextNum, keyNum)
   
